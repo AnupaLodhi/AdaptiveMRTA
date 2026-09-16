@@ -1,0 +1,3 @@
+condition,lock_success_rate_percent,event_success_rate_percent,lock_mean_iterations,event_mean_iterations,lock_mean_distance,event_mean_distance,lock_mean_astar,event_mean_astar,paired_astar_reduction_percent,astar_wins_out_of_30,lock_mean_global_calls,event_mean_global_calls,lock_mean_escalations
+static,100.0,100.0,23.933333333333334,23.433333333333334,198.36666666666667,196.76666666666668,1862.1333333333334,2076.0,9.705225890796385,25,18.466666666666665,13.466666666666667,17.466666666666665
+20pct_failure,100.0,100.0,28.2,26.866666666666667,220.26666666666668,216.53333333333333,1430.0333333333333,1959.0,25.515606164240072,26,19.6,14.433333333333334,18.6

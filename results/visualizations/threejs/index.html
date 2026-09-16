@@ -1,0 +1,2922 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+AdaptiveMRTA | 3D Robotics Simulator
+</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+
+    background:
+        #050b13;
+
+    color:
+        #ffffff;
+}
+
+
+#scene {
+
+    position: absolute;
+
+    inset: 0;
+}
+
+
+.glass {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(12, 25, 40, 0.96),
+            rgba(4, 12, 23, 0.92)
+        );
+
+    border:
+        1px solid
+        rgba(82, 167, 255, 0.19);
+
+    box-shadow:
+        0 20px 55px
+        rgba(0, 0, 0, 0.46);
+
+    backdrop-filter:
+        blur(16px);
+
+    border-radius:
+        18px;
+}
+
+
+/* --------------------------------
+   LEFT INFORMATION PANEL
+-------------------------------- */
+
+#info {
+
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+
+    width: 305px;
+
+    padding:
+        20px 22px;
+}
+
+
+.brand {
+
+    font-size:
+        29px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        -0.6px;
+}
+
+
+.brand-subtitle {
+
+    margin-top:
+        2px;
+
+    margin-bottom:
+        19px;
+
+    color:
+        #a9b9ca;
+
+    font-size:
+        14px;
+}
+
+
+.separator {
+
+    height:
+        1px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    margin:
+        13px 0;
+}
+
+
+.row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    margin:
+        8px 0;
+
+    font-size:
+        14px;
+}
+
+
+.value {
+
+    color:
+        #48b9ff;
+
+    font-weight:
+        700;
+}
+
+
+/* --------------------------------
+   LEGEND
+-------------------------------- */
+
+#legend {
+
+    position: absolute;
+
+    top: 300px;
+    left: 18px;
+
+    width: 235px;
+
+    padding:
+        17px;
+}
+
+
+.legend-title {
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        13px;
+}
+
+
+.legend-item {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    margin:
+        12px 0;
+
+    color:
+        #d0dae4;
+
+    font-size:
+        13px;
+}
+
+
+.robot-dot {
+
+    width:
+        18px;
+
+    height:
+        18px;
+
+    border-radius:
+        50%;
+
+    background:
+        #129dff;
+
+    box-shadow:
+        0 0 15px
+        #129dff;
+}
+
+
+.task-dot {
+
+    width:
+        17px;
+
+    height:
+        17px;
+
+    background:
+        #ff4141;
+
+    box-shadow:
+        0 0 14px
+        #ff4141;
+}
+
+
+.obstacle-dot {
+
+    width:
+        17px;
+
+    height:
+        17px;
+
+    background:
+        #596574;
+}
+
+
+.path-dot {
+
+    width:
+        32px;
+
+    height:
+        3px;
+
+    background:
+        #ffdc35;
+
+    box-shadow:
+        0 0 7px
+        #ffdc35;
+}
+
+
+/* --------------------------------
+   RIGHT METRICS
+-------------------------------- */
+
+#metrics {
+
+    position:
+        absolute;
+
+    top:
+        18px;
+
+    right:
+        18px;
+
+    width:
+        285px;
+
+    padding:
+        19px 22px;
+}
+
+
+.metric {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    margin:
+        12px 0;
+
+    font-size:
+        16px;
+}
+
+
+.metric-value {
+
+    color:
+        #4bc2ff;
+
+    font-size:
+        18px;
+
+    font-weight:
+        800;
+}
+
+
+.success {
+
+    color:
+        #5cf18c;
+}
+
+
+/* --------------------------------
+   ROBOT INSPECTOR
+-------------------------------- */
+
+#inspector {
+
+    position:
+        absolute;
+
+    left:
+        18px;
+
+    bottom:
+        100px;
+
+    width:
+        255px;
+
+    padding:
+        17px;
+}
+
+
+#inspector-title {
+
+    font-size:
+        16px;
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        10px;
+}
+
+
+.inspector-line {
+
+    color:
+        #bdcad7;
+
+    font-size:
+        13px;
+
+    margin:
+        6px 0;
+}
+
+
+/* --------------------------------
+   CONTROLS
+-------------------------------- */
+
+#controls {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    bottom:
+        19px;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(
+            820px,
+            70vw
+        );
+
+    min-height:
+        65px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        11px;
+
+    padding:
+        12px 16px;
+}
+
+
+button {
+
+    border:
+        none;
+
+    border-radius:
+        11px;
+
+    padding:
+        11px 16px;
+
+    color:
+        white;
+
+    background:
+        #17283b;
+
+    font-size:
+        13px;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s;
+}
+
+
+button:hover {
+
+    transform:
+        translateY(-1px);
+
+    background:
+        #223d59;
+}
+
+
+#play {
+
+    background:
+        #078eff;
+
+    box-shadow:
+        0 0 18px
+        rgba(0, 145, 255, 0.32);
+}
+
+
+#slider {
+
+    flex:
+        1;
+
+    cursor:
+        pointer;
+}
+
+
+#iteration-text {
+
+    min-width:
+        103px;
+
+    text-align:
+        center;
+
+    color:
+        #c2cfdd;
+
+    font-size:
+        13px;
+}
+
+
+/* --------------------------------
+   INSTRUCTIONS
+-------------------------------- */
+
+#instructions {
+
+    position:
+        absolute;
+
+    right:
+        20px;
+
+    bottom:
+        21px;
+
+    color:
+        rgba(255,255,255,0.44);
+
+    font-size:
+        11px;
+
+    line-height:
+        1.5;
+
+    text-align:
+        right;
+}
+
+
+#status {
+
+    position:
+        absolute;
+
+    top:
+        18px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        9px 16px;
+
+    font-size:
+        12px;
+
+    color:
+        #9fdcff;
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<div id="scene"></div>
+
+
+<div
+    id="info"
+    class="glass"
+>
+
+    <div class="brand">
+        AdaptiveMRTA
+    </div>
+
+    <div class="brand-subtitle">
+        Multi-Robot Task Allocation
+    </div>
+
+    <div class="separator"></div>
+
+
+    <div class="row">
+        <span>Algorithm</span>
+        <span
+            class="value"
+            id="algorithm"
+        ></span>
+    </div>
+
+
+    <div class="row">
+        <span>Navigation</span>
+        <span class="value">
+            A*
+        </span>
+    </div>
+
+
+    <div class="row">
+        <span>Robots</span>
+        <span
+            class="value"
+            id="robots-count"
+        ></span>
+    </div>
+
+
+    <div class="row">
+        <span>Tasks</span>
+        <span
+            class="value"
+            id="tasks-count"
+        ></span>
+    </div>
+
+
+    <div class="row">
+        <span>Obstacles</span>
+        <span
+            class="value"
+            id="obstacle-rate"
+        ></span>
+    </div>
+
+
+    <div class="row">
+        <span>Seed</span>
+        <span
+            class="value"
+            id="seed"
+        ></span>
+    </div>
+
+</div>
+
+
+
+<div
+    id="legend"
+    class="glass"
+>
+
+    <div class="legend-title">
+        Environment
+    </div>
+
+
+    <div class="legend-item">
+        <div class="robot-dot"></div>
+        Active Robot
+    </div>
+
+
+    <div class="legend-item">
+        <div class="task-dot"></div>
+        Active Task
+    </div>
+
+
+    <div class="legend-item">
+        <div class="obstacle-dot"></div>
+        Obstacle
+    </div>
+
+
+    <div class="legend-item">
+        <div class="path-dot"></div>
+        Planned A* Path
+    </div>
+
+</div>
+
+
+
+<div
+    id="metrics"
+    class="glass"
+>
+
+    <div class="metric">
+
+        <span>
+            Iteration
+        </span>
+
+        <span
+            class="metric-value"
+            id="iteration"
+        ></span>
+
+    </div>
+
+
+    <div class="metric">
+
+        <span>
+            Tasks Completed
+        </span>
+
+        <span
+            class="metric-value success"
+            id="completed"
+        ></span>
+
+    </div>
+
+
+    <div class="metric">
+
+        <span>
+            Total Distance
+        </span>
+
+        <span
+            class="metric-value"
+            id="distance"
+        ></span>
+
+    </div>
+
+
+    <div class="metric">
+
+        <span>
+            Blocked Moves
+        </span>
+
+        <span
+            class="metric-value"
+            id="blocked"
+        ></span>
+
+    </div>
+
+
+    <div class="metric">
+
+        <span>
+            Redundancy
+        </span>
+
+        <span
+            class="metric-value"
+            id="redundancy"
+        ></span>
+
+    </div>
+
+</div>
+
+
+
+<div
+    id="inspector"
+    class="glass"
+>
+
+    <div id="inspector-title">
+        Robot Inspector
+    </div>
+
+    <div
+        id="inspector-content"
+        class="inspector-line"
+    >
+        Click a robot in the arena.
+    </div>
+
+</div>
+
+
+
+<div
+    id="status"
+    class="glass"
+>
+    LIVE SIMULATION • HUNGARIAN COORDINATION
+</div>
+
+
+
+<div
+    id="controls"
+    class="glass"
+>
+
+    <button id="play">
+        ▶ Play
+    </button>
+
+    <button id="pause">
+        ⏸ Pause
+    </button>
+
+    <button id="reset">
+        ↻ Reset
+    </button>
+
+    <input
+        id="slider"
+        type="range"
+        value="0"
+        min="0"
+        step="1"
+    >
+
+    <div id="iteration-text">
+        Iteration 0
+    </div>
+
+</div>
+
+
+
+<div id="instructions">
+
+    Drag: rotate camera<br>
+    Scroll: zoom<br>
+    Click robot: inspect
+
+</div>
+
+
+
+<script type="importmap">
+
+{
+    "imports": {
+
+        "three":
+        "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+
+        "three/addons/":
+        "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+    }
+}
+
+</script>
+
+
+
+<script type="module">
+
+import * as THREE
+from "three";
+
+
+import {
+    OrbitControls
+}
+from "three/addons/controls/OrbitControls.js";
+
+
+
+/* =======================================================
+   LOAD REAL SIMULATION DATA
+======================================================= */
+
+const response =
+    await fetch(
+        "./simulation.json"
+    );
+
+
+const simulation =
+    await response.json();
+
+
+const config =
+    simulation.config;
+
+
+const frames =
+    simulation.frames;
+
+
+
+document.getElementById(
+    "algorithm"
+).textContent =
+    config.algorithm;
+
+
+document.getElementById(
+    "robots-count"
+).textContent =
+    config.num_agents;
+
+
+document.getElementById(
+    "tasks-count"
+).textContent =
+    config.num_tasks;
+
+
+document.getElementById(
+    "obstacle-rate"
+).textContent =
+    `${Math.round(
+        config.obstacle_density
+        * 100
+    )}%`;
+
+
+document.getElementById(
+    "seed"
+).textContent =
+    config.seed;
+
+
+
+/* =======================================================
+   BASIC THREE.JS SCENE
+======================================================= */
+
+const container =
+    document.getElementById(
+        "scene"
+    );
+
+
+const scene =
+    new THREE.Scene();
+
+
+scene.background =
+    new THREE.Color(
+        0x050b13
+    );
+
+
+scene.fog =
+    new THREE.Fog(
+        0x050b13,
+        48,
+        90
+    );
+
+
+
+const camera =
+    new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth
+        /
+        window.innerHeight,
+        0.1,
+        250
+    );
+
+
+camera.position.set(
+    34,
+    30,
+    37
+);
+
+
+
+const renderer =
+    new THREE.WebGLRenderer(
+        {
+            antialias:
+                true
+        }
+    );
+
+
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio,
+        2
+    )
+);
+
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+
+renderer.shadowMap.enabled =
+    true;
+
+
+renderer.shadowMap.type =
+    THREE.PCFSoftShadowMap;
+
+
+renderer.outputColorSpace =
+    THREE.SRGBColorSpace;
+
+
+container.appendChild(
+    renderer.domElement
+);
+
+
+
+const controls =
+    new OrbitControls(
+        camera,
+        renderer.domElement
+    );
+
+
+controls.enableDamping =
+    true;
+
+
+controls.target.set(
+    config.width / 2,
+    0,
+    config.height / 2
+);
+
+
+controls.minDistance =
+    16;
+
+
+controls.maxDistance =
+    95;
+
+
+controls.maxPolarAngle =
+    Math.PI / 2.04;
+
+
+
+/* =======================================================
+   LIGHTING
+======================================================= */
+
+scene.add(
+    new THREE.HemisphereLight(
+        0x8ecbff,
+        0x121820,
+        2.0
+    )
+);
+
+
+
+const sunlight =
+    new THREE.DirectionalLight(
+        0xffffff,
+        3.2
+    );
+
+
+sunlight.position.set(
+    25,
+    42,
+    12
+);
+
+
+sunlight.castShadow =
+    true;
+
+
+sunlight.shadow.mapSize.set(
+    2048,
+    2048
+);
+
+
+scene.add(
+    sunlight
+);
+
+
+
+const blueGlow =
+    new THREE.PointLight(
+        0x008cff,
+        75,
+        42
+    );
+
+
+blueGlow.position.set(
+    4,
+    10,
+    5
+);
+
+
+scene.add(
+    blueGlow
+);
+
+
+
+/* =======================================================
+   FLOOR
+======================================================= */
+
+const floor =
+    new THREE.Mesh(
+
+        new THREE.PlaneGeometry(
+            config.width,
+            config.height
+        ),
+
+        new THREE.MeshStandardMaterial(
+            {
+                color:
+                    0x242c36,
+
+                roughness:
+                    0.9,
+
+                metalness:
+                    0.05
+            }
+        )
+    );
+
+
+floor.rotation.x =
+    -Math.PI / 2;
+
+
+floor.position.set(
+    config.width / 2 - 0.5,
+    -0.04,
+    config.height / 2 - 0.5
+);
+
+
+floor.receiveShadow =
+    true;
+
+
+scene.add(
+    floor
+);
+
+
+
+const grid =
+    new THREE.GridHelper(
+        Math.max(
+            config.width,
+            config.height
+        ),
+        Math.max(
+            config.width,
+            config.height
+        ),
+        0x596979,
+        0x354150
+    );
+
+
+grid.position.set(
+    config.width / 2 - 0.5,
+    0.015,
+    config.height / 2 - 0.5
+);
+
+
+grid.material.opacity =
+    0.32;
+
+
+grid.material.transparent =
+    true;
+
+
+scene.add(
+    grid
+);
+
+
+
+/* =======================================================
+   BOUNDARY WALLS
+======================================================= */
+
+const wallMaterial =
+    new THREE.MeshStandardMaterial(
+        {
+            color:
+                0x1a2632,
+
+            roughness:
+                0.7,
+
+            metalness:
+                0.2
+        }
+    );
+
+
+function createWall(
+    width,
+    depth,
+    x,
+    z
+) {
+
+    const wall =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                width,
+                1.1,
+                depth
+            ),
+
+            wallMaterial
+        );
+
+
+    wall.position.set(
+        x,
+        0.55,
+        z
+    );
+
+
+    wall.castShadow =
+        true;
+
+
+    wall.receiveShadow =
+        true;
+
+
+    scene.add(
+        wall
+    );
+
+}
+
+
+createWall(
+    config.width + 2,
+    0.45,
+    config.width / 2 - 0.5,
+    -0.8
+);
+
+
+createWall(
+    config.width + 2,
+    0.45,
+    config.width / 2 - 0.5,
+    config.height - 0.2
+);
+
+
+createWall(
+    0.45,
+    config.height + 2,
+    -0.8,
+    config.height / 2 - 0.5
+);
+
+
+createWall(
+    0.45,
+    config.height + 2,
+    config.width - 0.2,
+    config.height / 2 - 0.5
+);
+
+
+
+/* =======================================================
+   OBSTACLES
+======================================================= */
+
+const obstacleGroup =
+    new THREE.Group();
+
+
+scene.add(
+    obstacleGroup
+);
+
+
+
+for (
+    const [x, y]
+    of simulation.obstacles
+) {
+
+    const height =
+        0.82;
+
+
+    const obstacle =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                0.92,
+                height,
+                0.92
+            ),
+
+            new THREE.MeshStandardMaterial(
+                {
+                    color:
+                        0x566473,
+
+                    roughness:
+                        0.58,
+
+                    metalness:
+                        0.28
+                }
+            )
+        );
+
+
+    obstacle.position.set(
+        x,
+        height / 2,
+        y
+    );
+
+
+    obstacle.castShadow =
+        true;
+
+
+    obstacle.receiveShadow =
+        true;
+
+
+    obstacleGroup.add(
+        obstacle
+    );
+
+}
+
+
+
+/* =======================================================
+   SPRITE LABEL FUNCTION
+======================================================= */
+
+function createLabel(
+    text,
+    color
+) {
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        256;
+
+
+    canvas.height =
+        96;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    ctx.fillStyle =
+        "rgba(5,13,23,0.90)";
+
+
+    ctx.roundRect(
+        35,
+        14,
+        186,
+        62,
+        12
+    );
+
+
+    ctx.fill();
+
+
+    ctx.font =
+        "bold 36px Arial";
+
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.textBaseline =
+        "middle";
+
+
+    ctx.fillStyle =
+        color;
+
+
+    ctx.fillText(
+        text,
+        128,
+        45
+    );
+
+
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.colorSpace =
+        THREE.SRGBColorSpace;
+
+
+    const material =
+        new THREE.SpriteMaterial(
+            {
+                map:
+                    texture,
+
+                transparent:
+                    true,
+
+                depthWrite:
+                    false
+            }
+        );
+
+
+    const sprite =
+        new THREE.Sprite(
+            material
+        );
+
+
+    sprite.scale.set(
+        2.0,
+        0.75,
+        1
+    );
+
+
+    return sprite;
+
+}
+
+
+
+/* =======================================================
+   ROBOTS
+======================================================= */
+
+const robots =
+    new Map();
+
+
+const robotGroup =
+    new THREE.Group();
+
+
+scene.add(
+    robotGroup
+);
+
+
+
+function createRobot(
+    id
+) {
+
+    const robot =
+        new THREE.Group();
+
+
+    robot.userData.robotId =
+        id;
+
+
+
+    const bottom =
+        new THREE.Mesh(
+
+            new THREE.CylinderGeometry(
+                0.55,
+                0.62,
+                0.24,
+                32
+            ),
+
+            new THREE.MeshStandardMaterial(
+                {
+                    color:
+                        0x101820,
+
+                    metalness:
+                        0.72,
+
+                    roughness:
+                        0.22
+                }
+            )
+        );
+
+
+    bottom.castShadow =
+        true;
+
+
+    robot.add(
+        bottom
+    );
+
+
+
+    const lightRing =
+        new THREE.Mesh(
+
+            new THREE.TorusGeometry(
+                0.52,
+                0.055,
+                12,
+                40
+            ),
+
+            new THREE.MeshBasicMaterial(
+                {
+                    color:
+                        0x00a5ff
+                }
+            )
+        );
+
+
+    lightRing.rotation.x =
+        Math.PI / 2;
+
+
+    lightRing.position.y =
+        0.10;
+
+
+    robot.add(
+        lightRing
+    );
+
+
+
+    const body =
+        new THREE.Mesh(
+
+            new THREE.CylinderGeometry(
+                0.43,
+                0.48,
+                0.40,
+                32
+            ),
+
+            new THREE.MeshStandardMaterial(
+                {
+                    color:
+                        0xdde6ef,
+
+                    metalness:
+                        0.65,
+
+                    roughness:
+                        0.23
+                }
+            )
+        );
+
+
+    body.position.y =
+        0.32;
+
+
+    body.castShadow =
+        true;
+
+
+    robot.add(
+        body
+    );
+
+
+    // Visual wheels — presentation layer only.
+    const wheelMaterial =
+        new THREE.MeshStandardMaterial({
+            color: 0x080d12,
+            roughness: 0.72,
+            metalness: 0.25
+        });
+
+    for (const side of [-1, 1]) {
+
+        const wheel =
+            new THREE.Mesh(
+                new THREE.CylinderGeometry(
+                    0.12,
+                    0.12,
+                    0.12,
+                    18
+                ),
+                wheelMaterial
+            );
+
+        wheel.rotation.z =
+            Math.PI / 2;
+
+        wheel.position.set(
+            side * 0.53,
+            0.17,
+            0
+        );
+
+        wheel.castShadow =
+            true;
+
+        robot.add(
+            wheel
+        );
+
+    }
+
+
+    // Front sensor identifies robot heading visually.
+    const frontSensor =
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                0.24,
+                0.10,
+                0.06
+            ),
+            new THREE.MeshBasicMaterial({
+                color: 0x27b7ff
+            })
+        );
+
+    frontSensor.position.set(
+        0,
+        0.33,
+        -0.46
+    );
+
+    robot.add(
+        frontSensor
+    );
+
+
+
+    const lidar =
+        new THREE.Mesh(
+
+            new THREE.CylinderGeometry(
+                0.21,
+                0.21,
+                0.12,
+                24
+            ),
+
+            new THREE.MeshStandardMaterial(
+                {
+                    color:
+                        0x080d12,
+
+                    metalness:
+                        0.85
+                }
+            )
+        );
+
+
+    lidar.position.y =
+        0.59;
+
+
+    robot.add(
+        lidar
+    );
+
+
+
+    const glow =
+        new THREE.PointLight(
+            0x009dff,
+            3.0,
+            3.5
+        );
+
+
+    glow.position.y =
+        0.18;
+
+
+    robot.add(
+        glow
+    );
+
+
+
+    const label =
+        createLabel(
+            `R${id}`,
+            "#54bcff"
+        );
+
+
+    label.position.y =
+        1.48;
+
+
+    robot.add(
+        label
+    );
+
+
+
+    robot.position.y =
+        0.16;
+
+
+    robotGroup.add(
+        robot
+    );
+
+
+    robots.set(
+        id,
+        robot
+    );
+
+
+    return robot;
+
+}
+
+
+
+for (
+    let i = 0;
+    i < config.num_agents;
+    i++
+) {
+
+    createRobot(
+        i
+    );
+
+}
+
+
+
+/* =======================================================
+   TASKS
+======================================================= */
+
+const tasks =
+    new Map();
+
+
+const taskGroup =
+    new THREE.Group();
+
+
+scene.add(
+    taskGroup
+);
+
+
+
+function createTask(
+    id
+) {
+
+    const group =
+        new THREE.Group();
+
+
+
+    const cube =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                0.58,
+                0.58,
+                0.58
+            ),
+
+            new THREE.MeshStandardMaterial(
+                {
+                    color:
+                        0xff3838,
+
+                    emissive:
+                        0x991515,
+
+                    emissiveIntensity:
+                        1.4,
+
+                    roughness:
+                        0.3,
+
+                    metalness:
+                        0.18
+                }
+            )
+        );
+
+
+    cube.position.y =
+        0.35;
+
+
+    cube.castShadow =
+        true;
+
+
+    group.add(
+        cube
+    );
+
+
+
+    const light =
+        new THREE.PointLight(
+            0xff3030,
+            3.8,
+            4.0
+        );
+
+
+    light.position.y =
+        0.55;
+
+
+    group.add(
+        light
+    );
+
+
+
+    const label =
+        createLabel(
+            `T${id}`,
+            "#ff6b6b"
+        );
+
+
+    label.position.y =
+        1.22;
+
+
+    group.add(
+        label
+    );
+
+
+
+    taskGroup.add(
+        group
+    );
+
+
+    tasks.set(
+        id,
+        group
+    );
+
+}
+
+
+
+for (
+    let i = 0;
+    i < config.num_tasks;
+    i++
+) {
+
+    createTask(
+        i
+    );
+
+}
+
+
+
+/* =======================================================
+   PATHS
+======================================================= */
+
+const pathGroup =
+    new THREE.Group();
+
+
+scene.add(
+    pathGroup
+);
+
+
+
+const pathColors = [
+
+    0xffd83d,
+    0xff76da,
+    0x51dfff,
+    0x7cff67,
+    0xffa14d,
+    0xad78ff
+
+];
+
+
+
+function clearPaths() {
+
+    while (
+        pathGroup.children.length
+    ) {
+
+        const item =
+            pathGroup.children[0];
+
+
+        pathGroup.remove(
+            item
+        );
+
+
+        if (
+            item.geometry
+        ) {
+
+            item.geometry.dispose();
+
+        }
+
+    }
+
+}
+
+
+
+function drawPath(
+    robot
+) {
+
+    if (
+        !robot.path
+        ||
+        robot.path.length < 2
+    ) {
+        return;
+    }
+
+
+    const isSelected =
+        selectedRobot === robot.id;
+
+
+    const points =
+        robot.path.map(
+            position =>
+                new THREE.Vector3(
+                    position[0],
+                    0.24,
+                    position[1]
+                )
+        );
+
+
+    /*
+     * Draw a dark underlay first.
+     * This separates the route from the grey warehouse floor.
+     */
+    const underGeometry =
+        new THREE.BufferGeometry()
+        .setFromPoints(
+            points
+        );
+
+
+    const underMaterial =
+        new THREE.LineBasicMaterial({
+            color: 0x071019,
+            transparent: true,
+            opacity: isSelected ? 0.95 : 0.55
+        });
+
+
+    const underLine =
+        new THREE.Line(
+            underGeometry,
+            underMaterial
+        );
+
+
+    underLine.userData.robotId =
+        robot.id;
+
+
+    underLine.renderOrder =
+        4;
+
+
+    pathGroup.add(
+        underLine
+    );
+
+
+    /*
+     * Bright A* route.
+     * Selected robot = yellow.
+     * Other robots = cyan/blue.
+     */
+    const geometry =
+        new THREE.BufferGeometry()
+        .setFromPoints(
+            points
+        );
+
+
+    const material =
+        new THREE.LineDashedMaterial({
+            color:
+                isSelected
+                    ? 0xffdf32
+                    : 0x35bfff,
+
+            dashSize:
+                isSelected
+                    ? 0.52
+                    : 0.38,
+
+            gapSize:
+                isSelected
+                    ? 0.12
+                    : 0.18,
+
+            transparent:
+                true,
+
+            opacity:
+                isSelected
+                    ? 1.0
+                    : 0.72
+        });
+
+
+    const line =
+        new THREE.Line(
+            geometry,
+            material
+        );
+
+
+    line.computeLineDistances();
+
+
+    line.userData.robotId =
+        robot.id;
+
+
+    line.renderOrder =
+        5;
+
+
+    pathGroup.add(
+        line
+    );
+
+
+    /*
+     * Small waypoint markers make the grid-cell A* path
+     * understandable without changing the simulation.
+     */
+    if (isSelected) {
+
+        const markerGeometry =
+            new THREE.SphereGeometry(
+                0.10,
+                10,
+                10
+            );
+
+
+        const markerMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0xffdf32
+            });
+
+
+        for (
+            let i = 0;
+            i < points.length;
+            i += 2
+        ) {
+
+            const marker =
+                new THREE.Mesh(
+                    markerGeometry,
+                    markerMaterial
+                );
+
+
+            marker.position.copy(
+                points[i]
+            );
+
+
+            marker.position.y =
+                0.27;
+
+
+            marker.userData.robotId =
+                robot.id;
+
+
+            pathGroup.add(
+                marker
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =======================================================
+   SIMULATION STATE
+======================================================= */
+
+let currentFrame =
+    0;
+
+
+let selectedRobot =
+    null;
+
+
+let playing =
+    false;
+
+
+let transitionStart =
+    0;
+
+
+let previousFrameIndex =
+    0;
+
+
+let targetFrameIndex =
+    0;
+
+
+const transitionDuration =
+    500;
+
+
+
+function setRobotInstantly(
+    robotData
+) {
+
+    const robot =
+        robots.get(
+            robotData.id
+        );
+
+
+    robot.position.x =
+        robotData.position[0];
+
+
+    robot.position.z =
+        robotData.position[1];
+
+}
+
+
+
+/* =======================================================
+   UI UPDATE
+======================================================= */
+
+function updateUI(
+    frame
+) {
+
+    const finalIteration =
+        frames[
+            frames.length - 1
+        ].iteration;
+
+
+    document.getElementById(
+        "iteration"
+    ).textContent =
+        `${frame.iteration} / ${finalIteration}`;
+
+
+    document.getElementById(
+        "completed"
+    ).textContent =
+        `${frame.completed_tasks} / ${config.num_tasks}`;
+
+
+    document.getElementById(
+        "distance"
+    ).textContent =
+        frame.distance.toFixed(
+            1
+        );
+
+
+    document.getElementById(
+        "blocked"
+    ).textContent =
+        frame.blocked_moves;
+
+
+    document.getElementById(
+        "redundancy"
+    ).textContent =
+        frame.redundancy.toFixed(
+            3
+        );
+
+
+    document.getElementById(
+        "iteration-text"
+    ).textContent =
+        `Iteration ${frame.iteration}`;
+
+
+    document.getElementById(
+        "slider"
+    ).value =
+        currentFrame;
+
+}
+
+
+
+/* =======================================================
+   INSPECTOR
+======================================================= */
+
+function updateInspector() {
+
+    if (
+        selectedRobot === null
+    ) {
+        return;
+    }
+
+
+    const frame =
+        frames[
+            currentFrame
+        ];
+
+
+    const robot =
+        frame.robots.find(
+            item =>
+                item.id
+                ===
+                selectedRobot
+        );
+
+
+    if (!robot) {
+        return;
+    }
+
+
+    document.getElementById(
+        "inspector-title"
+    ).textContent =
+        `Robot R${robot.id}`;
+
+
+    const pathLength =
+        Math.max(
+            0,
+            robot.path.length - 1
+        );
+
+
+    document.getElementById(
+        "inspector-content"
+    ).innerHTML =
+        `
+
+        <div class="inspector-line">
+        Position:
+        (${robot.position[0]},
+        ${robot.position[1]})
+        </div>
+
+        <div class="inspector-line">
+        Target:
+        ${
+            robot.target === null
+            ?
+            "None"
+            :
+            "T" + robot.target
+        }
+        </div>
+
+        <div class="inspector-line">
+        Planned path:
+        ${pathLength} cells
+        </div>
+
+        <div class="inspector-line">
+        Tasks completed:
+        ${robot.tasks_completed}
+        </div>
+
+        `;
+
+}
+
+
+
+/* =======================================================
+   FRAME DISPLAY
+======================================================= */
+
+function displayFrame(
+    index,
+    instant = true
+) {
+
+    currentFrame =
+        Math.max(
+            0,
+            Math.min(
+                index,
+                frames.length - 1
+            )
+        );
+
+
+    const frame =
+        frames[
+            currentFrame
+        ];
+
+
+
+    for (
+        const robotData
+        of frame.robots
+    ) {
+
+        if (instant) {
+
+            setRobotInstantly(
+                robotData
+            );
+
+        }
+
+    }
+
+
+
+    for (
+        const taskData
+        of frame.tasks
+    ) {
+
+        const task =
+            tasks.get(
+                taskData.id
+            );
+
+
+        task.position.x =
+            taskData.position[0];
+
+
+        task.position.z =
+            taskData.position[1];
+
+
+        task.visible =
+            taskData.active;
+
+    }
+
+
+
+    clearPaths();
+
+
+    for (
+        const robotData
+        of frame.robots
+    ) {
+
+        drawPath(
+            robotData
+        );
+
+    }
+
+
+
+    updateUI(
+        frame
+    );
+
+
+    updateInspector();
+
+}
+
+
+
+/* =======================================================
+   SMOOTH ROBOT MOTION
+======================================================= */
+
+function startTransition(
+    nextIndex
+) {
+
+    if (
+        nextIndex
+        >= frames.length
+    ) {
+        return;
+    }
+
+
+    previousFrameIndex =
+        currentFrame;
+
+
+    targetFrameIndex =
+        nextIndex;
+
+
+    transitionStart =
+        performance.now();
+
+
+    currentFrame =
+        nextIndex;
+
+
+    displayFrame(
+        nextIndex,
+        false
+    );
+
+}
+
+
+
+function animateTransition(
+    now
+) {
+
+    if (
+        previousFrameIndex
+        ===
+        targetFrameIndex
+    ) {
+        return;
+    }
+
+
+    const progress =
+        Math.min(
+            1,
+            (
+                now
+                -
+                transitionStart
+            )
+            /
+            transitionDuration
+        );
+
+
+    const eased =
+        progress
+        *
+        progress
+        *
+        (
+            3
+            -
+            2
+            *
+            progress
+        );
+
+
+    const oldFrame =
+        frames[
+            previousFrameIndex
+        ];
+
+
+    const newFrame =
+        frames[
+            targetFrameIndex
+        ];
+
+
+
+    for (
+        const newRobot
+        of newFrame.robots
+    ) {
+
+        const oldRobot =
+            oldFrame.robots.find(
+                item =>
+                    item.id
+                    ===
+                    newRobot.id
+            );
+
+
+        const object =
+            robots.get(
+                newRobot.id
+            );
+
+
+        object.position.x =
+            THREE.MathUtils.lerp(
+                oldRobot.position[0],
+                newRobot.position[0],
+                eased
+            );
+
+
+        object.position.z =
+            THREE.MathUtils.lerp(
+                oldRobot.position[1],
+                newRobot.position[1],
+                eased
+            );
+
+    }
+
+
+
+    if (
+        progress >= 1
+    ) {
+
+        previousFrameIndex =
+            targetFrameIndex;
+
+    }
+
+}
+
+
+
+/* =======================================================
+   PLAYBACK
+======================================================= */
+
+let lastAdvance =
+    0;
+
+
+function play() {
+
+    playing =
+        true;
+
+}
+
+
+
+function pause() {
+
+    playing =
+        false;
+
+}
+
+
+
+function reset() {
+
+    playing =
+        false;
+
+
+    previousFrameIndex =
+        0;
+
+
+    targetFrameIndex =
+        0;
+
+
+    currentFrame =
+        0;
+
+
+    displayFrame(
+        0,
+        true
+    );
+
+}
+
+
+
+/* =======================================================
+   ROBOT CLICKING
+======================================================= */
+
+const raycaster =
+    new THREE.Raycaster();
+
+
+const mouse =
+    new THREE.Vector2();
+
+
+
+renderer.domElement.addEventListener(
+    "pointerdown",
+    event => {
+
+        mouse.x =
+            (
+                event.clientX
+                /
+                window.innerWidth
+            )
+            * 2
+            - 1;
+
+
+        mouse.y =
+            -(
+                event.clientY
+                /
+                window.innerHeight
+            )
+            * 2
+            + 1;
+
+
+        raycaster.setFromCamera(
+            mouse,
+            camera
+        );
+
+
+        const intersections =
+            raycaster.intersectObjects(
+                robotGroup.children,
+                true
+            );
+
+
+        if (
+            intersections.length
+            === 0
+        ) {
+            return;
+        }
+
+
+        let object =
+            intersections[0].object;
+
+
+        while (
+            object.parent
+            &&
+            object.userData.robotId
+            === undefined
+        ) {
+
+            object =
+                object.parent;
+
+        }
+
+
+        if (
+            object.userData.robotId
+            !== undefined
+        ) {
+
+            selectedRobot =
+                object.userData.robotId;
+
+
+            updateInspector();
+
+        }
+
+    }
+);
+
+
+
+/* =======================================================
+   BUTTONS
+======================================================= */
+
+document.getElementById(
+    "play"
+).onclick =
+    play;
+
+
+document.getElementById(
+    "pause"
+).onclick =
+    pause;
+
+
+document.getElementById(
+    "reset"
+).onclick =
+    reset;
+
+
+
+const slider =
+    document.getElementById(
+        "slider"
+    );
+
+
+slider.max =
+    frames.length - 1;
+
+
+slider.addEventListener(
+    "input",
+    event => {
+
+        pause();
+
+
+        const index =
+            Number(
+                event.target.value
+            );
+
+
+        previousFrameIndex =
+            index;
+
+
+        targetFrameIndex =
+            index;
+
+
+        displayFrame(
+            index,
+            true
+        );
+
+    }
+);
+
+
+
+/* =======================================================
+   MAIN ANIMATION LOOP
+======================================================= */
+
+function renderLoop(
+    now
+) {
+
+    requestAnimationFrame(
+        renderLoop
+    );
+
+
+    controls.update();
+
+
+
+    if (
+        playing
+        &&
+        previousFrameIndex
+        ===
+        targetFrameIndex
+    ) {
+
+        if (
+            now - lastAdvance
+            > 650
+        ) {
+
+            lastAdvance =
+                now;
+
+
+            if (
+                currentFrame
+                <
+                frames.length - 1
+            ) {
+
+                startTransition(
+                    currentFrame + 1
+                );
+
+            }
+            else {
+
+                playing =
+                    false;
+
+            }
+
+        }
+
+    }
+
+
+
+    animateTransition(
+        now
+    );
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+
+displayFrame(
+    0,
+    true
+);
+
+
+requestAnimationFrame(
+    renderLoop
+);
+
+
+
+/* =======================================================
+   RESIZE
+======================================================= */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        camera.aspect =
+            window.innerWidth
+            /
+            window.innerHeight;
+
+
+        camera.updateProjectionMatrix();
+
+
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
