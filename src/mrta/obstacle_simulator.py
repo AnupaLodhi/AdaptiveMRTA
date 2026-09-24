@@ -429,6 +429,11 @@ class ObstacleSimulator:
             and not self.environment
             .all_tasks_completed()
         ):
+            # Stop if unfinished tasks remain but no
+            # active robots are available to complete them.
+            if not self.environment.get_active_agents():
+                break
+
             self.step()
 
         success = (
