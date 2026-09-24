@@ -18,7 +18,11 @@ The current framework includes deterministic scenario generation, A* path planni
 
 ## Live Interactive Demo
 
-**[Launch the AdaptiveMRTA 3D Demo](https://anupalodhi.github.io/AdaptiveMRTA/)**
+**[Launch the AdaptiveMRTA Interactive Research App](https://adaptive-mrta.lovable.app/)**
+
+Full research interface with the project workflow and interactive simulation based on exported AdaptiveMRTA simulation data.
+
+**[Open the lightweight GitHub Pages 3D Demo](https://anupalodhi.github.io/AdaptiveMRTA/)**
 
 The browser-based visualization demonstrates robots navigating an obstacle-constrained environment while completing spatially distributed tasks.
 
