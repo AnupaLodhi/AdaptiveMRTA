@@ -71,6 +71,7 @@ class ObstacleSimulator:
 
         self.blocked_moves = 0
         self.unreachable_plans = 0
+        self.navigation_astar_calls = 0
 
         self.redundant_target_events = 0
         self.total_target_assignments = 0
@@ -345,6 +346,8 @@ class ObstacleSimulator:
                 )
                 continue
 
+            self.navigation_astar_calls += 1
+
             path = astar(
                 self.environment.grid_map,
                 start,
@@ -481,6 +484,8 @@ class ObstacleSimulator:
                 productive_agents,
             "blocked_moves":
                 self.blocked_moves,
+            "navigation_astar_calls":
+                self.navigation_astar_calls,
             "unreachable_plans":
                 self.unreachable_plans,
             "redundant_target_events":
