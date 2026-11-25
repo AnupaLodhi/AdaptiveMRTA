@@ -1,0 +1,1 @@
+configuration,robots,tasks,grid_width,grid_height,obstacle_density,seed,failure_rate,method,success,iterations,completed_tasks,total_distance,blocked_moves,total_astar,global_calls,selective_transfers,stall_checks,stall_transfers,stall_rejections,recovery_calls,runtime_seconds,successful_makespan,task_completion_pct
