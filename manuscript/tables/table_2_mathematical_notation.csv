@@ -1,0 +1,39 @@
+category,symbol,definition,unit
+Environment,"G=(V,E)",Grid environment graph,-
+Environment,V,Traversable grid cells,-
+Environment,E,Valid adjacent-cell transitions,-
+Allocation,R_k,Active robot set at iteration k,-
+Allocation,T_k,Incomplete task set at iteration k,-
+Allocation,n_k,Number of active robots,count
+Allocation,m_k,Number of incomplete tasks,count
+Allocation,r_i,Robot i,-
+Allocation,t_j,Task j,-
+Allocation,p_i(k),Robot position,grid coordinates
+Allocation,q_j,Fixed task location,grid coordinates
+Allocation,x_ij(k),Binary reservation variable,binary
+Allocation,P_ij(k),Estimated A* path,-
+Allocation,d_ij(k),Estimated A* path cost,grid steps
+Proposed,I_k,Idle robot set,-
+Proposed,S_k,Eligible stalled owner set,-
+Proposed,z_i(k),Reserved task ID and robot position,-
+Proposed,s_i(k),Consecutive unchanged-state count,count
+Proposed,sigma,Stall eligibility threshold,count
+Proposed,delta,Normal reassignment cost margin,grid steps
+Proposed,tau,Saturation delay threshold,requests
+Proposed,h_k,Consecutive saturation-request counter,count
+Proposed,u_k,Consecutive rejected normal checks,count
+Proposed,rho,Global recovery rejection threshold,count
+Proposed,Delta_ibj(k),Estimated reassignment gain,grid steps
+Proposed,A_k,Valid robot-task reservations,-
+Proposed,chi_k,Reservation saturation indicator,binary
+Evaluation,B,Total blocked movement attempts,count
+Evaluation,N_Astar,Total counted A* evaluations,count
+Evaluation,C_max,Makespan of successful execution,iterations
+Evaluation,K,Executed simulation iterations,iterations
+Evaluation,D,Total robot travel distance,grid steps
+Evaluation,N_G,Global allocation calls,count
+Evaluation,N_C,Completed tasks,count
+Evaluation,N_T,Initial task count,count
+Evaluation,SR,Mission success rate across runs,percent
+Evaluation,T_run,Measured execution runtime,seconds
+Evaluation,K_max,Maximum simulation iterations,iterations

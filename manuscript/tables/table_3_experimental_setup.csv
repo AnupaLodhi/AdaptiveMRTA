@@ -1,0 +1,22 @@
+section,item,value,detail,source
+Phase,Development,280,Seeds 2000-2019; 7 methods; 1 repetition(s); 2 failure conditions,run_casr_v2_development.py
+Phase,Independent holdout,280,Seeds 3000-3019; 7 methods; 1 repetition(s); 2 failure conditions,run_casr_v2_holdout.py
+Phase,Ablation,300,Seeds 4000-4029; 5 methods; 1 repetition(s); 2 failure conditions,run_casr_v2_ablation.py
+Phase,Scalability,600,Seeds 5000-5009; 5 methods; 1 repetition(s); 2 failure conditions,run_casr_v2_scalability.py
+Phase,Controlled runtime,300,Seeds 6000-6004; 5 methods; 3 repetition(s); 2 failure conditions,run_casr_runtime.py
+Scalability,small,5 robots / 10 tasks,52x30; obstacle density=20%,run_casr_v2_scalability.py
+Scalability,medium,15 robots / 20 tasks,52x30; obstacle density=20%,run_casr_v2_scalability.py
+Scalability,large,30 robots / 50 tasks,52x30; obstacle density=20%,run_casr_v2_scalability.py
+Scalability,extra_large,50 robots / 100 tasks,52x30; obstacle density=20%,run_casr_v2_scalability.py
+Scalability,expanded,50 robots / 100 tasks,100x60; obstacle density=20%,run_casr_v2_scalability.py
+Scalability,dense_obstacles,15 robots / 20 tasks,52x30; obstacle density=30%,run_casr_v2_scalability.py
+Shared setting,Maximum iterations,500,Per simulation,Experiment scripts
+Shared setting,Failure rates,"0%, 20%",Same rates across all phases,Experiment scripts
+Shared setting,Failure iteration,5,Applied to selected robots,Experiment scripts
+Shared setting,Failure sampling seed offset,50000,seed + 50000,Experiment scripts
+Shared setting,Default medium grid,52x30,"15 robots, 20 tasks",src/mrta/config.py
+Shared setting,Normal cost margin,3,Grid steps,src/mrta/cost_aware_selective_allocator.py
+Shared setting,Saturation delay,5,Normal selective check after five delayed requests,src/mrta/cost_aware_selective_allocator.py
+Shared setting,Stall threshold,2,Unchanged-state checks,src/mrta/stall_aware_allocator.py
+Shared setting,Global recovery threshold,2,Rejected normal selective checks,src/mrta/cost_aware_selective_allocator.py
+Shared setting,Runtime repetitions,3,Shuffled method order per repetition,run_casr_runtime.py
