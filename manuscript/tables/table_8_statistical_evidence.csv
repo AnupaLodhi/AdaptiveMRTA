@@ -1,0 +1,5 @@
+analysis,test,correction_family,comparisons,holm_significant,paired_scenarios_per_comparison
+Independent holdout,Paired two-sided Wilcoxon,Holdout: 60 comparisons,60,21,20
+Ablation blocking,Paired two-sided exact sign test,Blocking: 56 comparisons,8,4,30
+Scalability blocking,Paired two-sided exact sign test,Blocking: 56 comparisons,48,0,10
+Controlled runtime,Paired two-sided Wilcoxon,Runtime: 16 comparisons,16,0,5
